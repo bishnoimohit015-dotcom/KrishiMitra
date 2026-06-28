@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 
-import Sidebar from "@/components/dashboard/Sidebar";
-import Navbar from "@/components/dashboard/Navbar";
+import DashboardLayoutClient from "@/components/dashboard/DashboardLayoutClient";
 
 type DashboardLayoutProps = {
   children: ReactNode;
@@ -11,16 +10,8 @@ export default function DashboardLayout({
   children,
 }: DashboardLayoutProps) {
   return (
-    <div className="flex min-h-screen bg-background">
-      <Sidebar />
-
-      <div className="flex flex-1 flex-col">
-        <Navbar />
-
-        <main className="flex-1 p-8">
-          {children}
-        </main>
-      </div>
-    </div>
+    <DashboardLayoutClient>
+      {children}
+    </DashboardLayoutClient>
   );
 }
