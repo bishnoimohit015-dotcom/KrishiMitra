@@ -1,30 +1,28 @@
-import { Button } from "@/components/ui/button";
+import { createClient } from "@/lib/supabase/server";
 
-export default function HomePage() {
+export default async function TestPage() {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase.from("profiles").select("*").limit(1);
+
   return (
-    <main className="min-h-screen bg-background flex flex-col items-center justify-center gap-6 p-8">
-      <h1 className="text-5xl font-bold text-primary">
-        KrishiMitra AI
-      </h1>
+    <main className="flex min-h-screen items-center justify-center">
+      <div className="rounded-lg border p-6 max-w-2xl">
+        <h1 className="mb-4 text-2xl font-bold">
+          Supabase Database Test
+        </h1>
 
-      <div className="flex flex-wrap gap-4">
-        <Button>Primary</Button>
-
-        <Button variant="secondary">
-          Secondary
-        </Button>
-
-        <Button variant="outline">
-          Outline
-        </Button>
-
-        <Button variant="ghost">
-          Ghost
-        </Button>
-
-        <Button variant="destructive">
-          Delete
-        </Button>
+        <pre className="text-sm">
+          {JSON.stringify(
+            {
+              success: !error,
+              data,
+              error: error?.message,
+            },
+            null,
+            2
+          )}
+        </pre>
       </div>
     </main>
   );
