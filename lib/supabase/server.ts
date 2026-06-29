@@ -12,10 +12,16 @@ export async function createClient() {
         getAll() {
           return cookieStore.getAll();
         },
+
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => {
-            cookieStore.set(name, value, options);
-          });
+          try {
+            cookiesToSet.forEach(({ name, value, options }) => {
+              cookieStore.set(name, value, options);
+            });
+          } catch {
+            // This can happen in Server Components.
+            // Middleware will refresh the session when needed.
+          }
         },
       },
     }

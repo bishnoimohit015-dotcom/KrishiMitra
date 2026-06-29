@@ -3,8 +3,10 @@ import { createClient } from "@/lib/supabase/server";
 export default async function TestPage() {
   const supabase = await createClient();
 
-  const { data, error } = await supabase.from("profiles").select("*").limit(1);
-
+const { data, error } = await supabase
+  .from("farmer_profiles")
+  .select("*")
+  .limit(1);
   return (
     <main className="flex min-h-screen items-center justify-center">
       <div className="rounded-lg border p-6 max-w-2xl">

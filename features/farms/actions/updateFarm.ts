@@ -6,16 +6,11 @@ import { createClient } from "@/lib/supabase/server";
 
 import { farmSchema } from "../validation";
 
-export async function updateFarm(id: string, formData: FormData) {
+export async function updateFarm(
+  id: string,
+  formData: FormData
+) {
   const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    throw new Error("Unauthorized");
-  }
 
   const data = farmSchema.parse({
     farm_name: formData.get("farm_name"),
@@ -27,9 +22,20 @@ export async function updateFarm(id: string, formData: FormData) {
     notes: formData.get("notes"),
   });
 
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("Unauthorized");
+  }
+
   const { error } = await supabase
     .from("farms")
-    .update(data)
+    .update({
+      ...data,
+      updated_at: new Date().toISOString(),
+    })
     .eq("id", id)
     .eq("farmer_id", user.id);
 
@@ -38,4 +44,5 @@ export async function updateFarm(id: string, formData: FormData) {
   }
 
   revalidatePath("/dashboard/farms");
+  revalidatePath(`/dashboard/farms/${id}`);
 }

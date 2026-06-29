@@ -1,6 +1,7 @@
 "use client";
 
 import type { Dispatch, SetStateAction } from "react";
+import { dashboardNavigation } from "@/features/dashboard/constants/navigation";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -20,48 +21,7 @@ type SidebarProps = {
   setSidebarOpen: Dispatch<SetStateAction<boolean>>;
 };
 
-const menuItems = [
-  {
-    title: "Dashboard",
-    href: "/dashboard",
-    icon: Home,
-  },
-  {
-    title: "Farms",
-    href: "/dashboard/farms",
-    icon: Tractor,
-  },
-  {
-    title: "Crops",
-    href: "/dashboard/crops",
-    icon: Sprout,
-  },
-  {
-    title: "Expenses",
-    href: "/dashboard/expenses",
-    icon: Wallet,
-  },
-  {
-    title: "Weather",
-    href: "/dashboard/weather",
-    icon: CloudSun,
-  },
-  {
-    title: "AI Assistant",
-    href: "/dashboard/ai",
-    icon: Bot,
-  },
-  {
-    title: "Disease Detection",
-    href: "/dashboard/disease",
-    icon: Camera,
-  },
-  {
-    title: "Settings",
-    href: "/dashboard/settings",
-    icon: Settings,
-  },
-];
+
 
 export default function Sidebar({
   sidebarOpen,
@@ -78,7 +38,7 @@ export default function Sidebar({
         </h1>
 
         <nav className="space-y-2">
-          {menuItems.map((item) => {
+          {dashboardNavigation.map((item) => {
             const Icon = item.icon;
 
             const isActive =
@@ -131,7 +91,7 @@ export default function Sidebar({
         </div>
 
         <nav className="space-y-2">
-          {menuItems.map((item) => {
+          {dashboardNavigation.map((item) => {
             const Icon = item.icon;
 
             const isActive =
