@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 import { getFarm } from "@/features/farms/actions/getFarm";
+import EditFarmForm from "@/features/farms/components/EditFarmForm";
 
 type PageProps = {
   params: Promise<{
@@ -38,9 +39,7 @@ export default async function EditFarmPage({
       </div>
 
       <div className="rounded-2xl border bg-card p-6">
-        <p className="text-muted-foreground">
-          Edit form will be added in the next step.
-        </p>
+        <EditFarmForm farm={farm} />
       </div>
     </div>
   );

@@ -30,19 +30,26 @@ export async function updateFarm(
     throw new Error("Unauthorized");
   }
 
-  const { error } = await supabase
+  const { data: updatedFarm, error } = await supabase
     .from("farms")
     .update({
       ...data,
       updated_at: new Date().toISOString(),
     })
     .eq("id", id)
-    .eq("farmer_id", user.id);
+    .eq("farmer_id", user.id)
+    .select()
+    .single();
 
-  if (error) {
-    throw new Error(error.message);
+  if (error || !updatedFarm) {
+    throw new Error("Farm not found.");
   }
 
   revalidatePath("/dashboard/farms");
   revalidatePath(`/dashboard/farms/${id}`);
+  revalidatePath(`/dashboard/farms/${id}/edit`);
+
+  return {
+    success: true,
+  };
 }
